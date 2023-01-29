@@ -12,6 +12,10 @@ app.use('/', function(req,res) {
     res.sendFile(path.join(__dirname+'/nostylist-app/index.html'));
 });
 
+app.get('/mvp', (req,res) => {
+  res.send("this is mvp page");
+});
+
 app.listen(port, () => {
     console.log("server is running on "+port);
 });
