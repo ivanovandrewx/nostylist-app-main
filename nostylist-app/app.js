@@ -325,7 +325,7 @@ ItemTypes.find({}, function(err, items) {
   const select = document.getElementById("item-selector");
   
   // Iterate through the items and create option elements
-  ItemTypes.forEach(function(item) {
+  items.forEach(function(item) {
     const option = document.createElement("option");
     option.value = item._id;
     option.text = item.name;
