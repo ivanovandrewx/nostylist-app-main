@@ -1,10 +1,10 @@
 // connect to the mongoose database
 
-const mongoose = require('mongoose');
+import { set, connect, connection as _connection, Schema, model } from 'mongoose';
 
-mongoose.set('strictQuery', true);
+set('strictQuery', true);
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+import { MongoClient, ServerApiVersion } from 'mongodb';
 const uri = "mongodb+srv://ivanovandrew:raMIOUeS62vSZ8Dj@cluster0.xbj7nrv.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 client.connect(err => {
@@ -13,9 +13,9 @@ client.connect(err => {
   client.close();
 });
 
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
-const connection = mongoose.connection;
+const connection = _connection;
 
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
@@ -23,12 +23,12 @@ connection.once('open', () => {
 
 // create item types schema
 
-const ItemTypesSchema = new mongoose.Schema({
+const ItemTypesSchema = new Schema({
   name: String,
   category: String
 });
 
-const ItemTypes = mongoose.model('item_types', ItemTypesSchema);
+const ItemTypes = model('item_types', ItemTypesSchema);
 
 // Retrieve items from the "items" collection
 ItemTypes.find({}, function(err, items) {
