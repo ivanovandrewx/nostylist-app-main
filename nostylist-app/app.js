@@ -448,3 +448,49 @@ Shoes.save();
 const Sneakers = new ItemTypes({name: "Sneakers", category:"Footwear"});
 Sneakers.save();
 */
+
+const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const colorz = [
+      'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'
+    ];
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 200;
+    let currentAngle = 0;
+    const slice = Math.PI * 2 / colorz.length;
+
+    colorz.forEach(function(color) {
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + slice);
+      ctx.closePath();
+
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+      gradient.addColorStop(0, color);
+      gradient.addColorStop(1, 'black');
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      currentAngle += slice;
+    });
+
+    canvas.addEventListener('click', function(event) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const dx = x - centerX;
+      const dy = y - centerY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance > radius) {
+        return;
+      }
+
+      const angle = Math.atan2(dy, dx);
+      const index = Math.round(angle / slice) % colorz.length;
+      alert(colorz[index]);
+    });
